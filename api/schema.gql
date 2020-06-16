@@ -1,0 +1,97 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Cliente {
+  id: ID!
+  nome: String!
+}
+
+type Pedido {
+  id: ID!
+  data: DateTime!
+  cliente: Cliente!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Produto {
+  id: ID!
+  nome: String!
+  preco: Float!
+}
+
+type PedidoItem {
+  pedido_id: Float!
+  produto_id: Float!
+  qtd: Float!
+}
+
+type Query {
+  allPedidos: [Pedido!]!
+  pedido(id: Float!): Pedido!
+  allClientes: [Cliente!]!
+  cliente(id: Float!): Cliente!
+  allProdutos: [Produto!]!
+  produto(id: Float!): Produto!
+  allPedidoItems: [PedidoItem!]!
+  pedidoItem(produto_id: Float!, pedido_id: Float!): PedidoItem!
+}
+
+type Mutation {
+  createPedido(data: CreatePedidoInput!): Pedido!
+  updatePedido(data: UpdatePedidoInput!, id: Float!): Pedido!
+  deletePedido(id: Float!): Boolean!
+  createCliente(data: CreateClienteInput!): Cliente!
+  updateCliente(data: UpdateClienteInput!, id: Float!): Cliente!
+  deleteCliente(id: Float!): Boolean!
+  createProduto(data: CreateProdutoInput!): Produto!
+  updateProduto(data: UpdateProdutoInput!, id: Float!): Produto!
+  deleteProduto(id: Float!): Boolean!
+  createPedidoItem(data: CreatePedidoItemInput!): PedidoItem!
+  updatePedidoItem(data: UpdatePedidoItemInput!, produto_id: Float!, pedido_id: Float!): PedidoItem!
+  deletePedidoItem(produto_id: Float!, pedido_id: Float!): Boolean!
+}
+
+input CreatePedidoInput {
+  data: DateTime!
+  cliente_id: Float!
+}
+
+input UpdatePedidoInput {
+  data: DateTime!
+  cliente_id: Float!
+}
+
+input CreateClienteInput {
+  nome: String!
+}
+
+input UpdateClienteInput {
+  nome: String!
+}
+
+input CreateProdutoInput {
+  nome: String!
+  preco: Float!
+}
+
+input UpdateProdutoInput {
+  nome: String!
+  preco: Float!
+}
+
+input CreatePedidoItemInput {
+  pedido_id: Float!
+  produto_id: Float!
+  qtd: Float!
+}
+
+input UpdatePedidoItemInput {
+  pedido_id: Float!
+  produto_id: Float!
+  qtd: Float!
+}
