@@ -1,6 +1,7 @@
 import { ObjectType, ID, Field } from '@nestjs/graphql';
-import { Entity, PrimaryGeneratedColumn, Column, PrimaryColumn, ManyToOne, RelationId, JoinColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, PrimaryColumn, ManyToOne, OneToMany, JoinColumn } from 'typeorm';
 import { Cliente } from 'src/cliente/cliente.entity';
+import { PedidoItem } from 'src/pedido-item/pedido-item.entity';
 
 @ObjectType()
 @Entity({ schema: "sc3" })
@@ -14,9 +15,13 @@ export class Pedido {
   @Column()
   data: Date;
   
-  @Field({name: "cliente"})
+  @Field(type=> Cliente, {name: "cliente"})
   @Column({ name: "cliente_id", type: "integer"})
   @ManyToOne(type => Cliente, c => c.pedidos)
   @JoinColumn({name:"cliente_id"})
   cliente: Cliente;
+
+  @Field(type => [PedidoItem])
+  @OneToMany(()=>PedidoItem, (item)=>item.pedido)
+  items: Array<PedidoItem>;
 }

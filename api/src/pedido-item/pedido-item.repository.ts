@@ -7,7 +7,7 @@ import { UpdatePedidoItemInput } from './dto/update-pedido-item.type';
 export class PedidoItemRepository extends Repository<PedidoItem> {
   async createAndSave(createPedidoItemInput: CreatePedidoItemInput): Promise<PedidoItem> {
     const PedidoItem = await this.save(this.create(createPedidoItemInput));
-    return await this.findById(PedidoItem.pedido_id, PedidoItem.produto_id);
+    return await this.findById(PedidoItem.pedido.id, PedidoItem.produto.id);
   }
 
   async findAll(): Promise<PedidoItem[]> {
@@ -20,10 +20,8 @@ export class PedidoItemRepository extends Repository<PedidoItem> {
 
   async findAndUpdate(dbPedidoItem: PedidoItem, data: UpdatePedidoItemInput): Promise<PedidoItem> {
     await this.createQueryBuilder().update(PedidoItem).set({
-      pedido_id: data.pedido_id,
-      produto_id: data.produto_id,
       qtd: data.qtd
-    }).where("pedido_id = :pedido_id", { pedido_id: dbPedidoItem.pedido_id }).andWhere("produto_id = :produto_id", { produto_id: dbPedidoItem.produto_id }).execute();
+    }).where("pedido_id = :pedido_id", { pedido_id: dbPedidoItem.pedido.id }).andWhere("produto_id = :produto_id", { produto_id: dbPedidoItem.produto.id }).execute();
     const updatedPedidoItem = this.create({ ...dbPedidoItem, ...data });
     return updatedPedidoItem;
   }

@@ -5,30 +5,33 @@
 type Cliente {
   id: ID!
   nome: String!
+  pedidos: [Pedido!]!
+}
+
+type Produto {
+  id: ID!
+  nome: String!
+  preco: Float!
+  pedidos: [PedidoItem!]!
+}
+
+type PedidoItem {
+  pedido: Pedido!
+  produto: Produto!
+  qtd: Float!
 }
 
 type Pedido {
   id: ID!
   data: DateTime!
   cliente: Cliente!
+  items: [PedidoItem!]!
 }
 
 """
 A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
 """
 scalar DateTime
-
-type Produto {
-  id: ID!
-  nome: String!
-  preco: Float!
-}
-
-type PedidoItem {
-  pedido_id: Float!
-  produto_id: Float!
-  qtd: Float!
-}
 
 type Query {
   allPedidos: [Pedido!]!

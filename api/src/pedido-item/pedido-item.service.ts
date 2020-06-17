@@ -36,7 +36,7 @@ export class PedidoItemService {
 
     async delete(pedido_id: number, produto_id: number): Promise<boolean> {
         const dbPedidoItem = await this.findById(pedido_id, produto_id);
-        const deleted = await this.PedidoItemRepository.deleteById(dbPedidoItem.pedido_id, dbPedidoItem.produto_id);
+        const deleted = await this.PedidoItemRepository.deleteById(dbPedidoItem.pedido.id, dbPedidoItem.produto.id);
         if (deleted) {
             return true;
         }

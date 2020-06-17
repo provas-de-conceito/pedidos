@@ -6,27 +6,19 @@ import { Produto } from 'src/produto/produto.entity';
 @ObjectType()
 @Entity({ schema: "sc3" })
 export class PedidoItem {
-  @Field()
-  // primary key
-  @PrimaryColumn()
-  // relacion many to one
-  @ManyToOne(type => Pedido, p => p.id)
-  // foreing key
-  @JoinColumn([
-    { name: "pedido_id", referencedColumnName: "id" },
-  ])
-  pedido_id: number;
+  @Field(type=> Pedido, {name: "pedido"})
+  @Column({ name: "pedido_id", type: "integer", primary: true })
+  @ManyToOne(type => Pedido, p => p.items)
+  @JoinColumn({name:"pedido_id"})
+  pedido: Pedido;
 
-  @Field()
-  @Column()
-  @ManyToOne(type => Produto, p => p.id)
-  @JoinColumn([
-    { name: "produto_id", referencedColumnName: "id" },
-  ])
-  produto_id: number;
+  @Field(type=> Produto,{name: "produto"})
+  @Column({ name: "produto_id", type: "integer", primary: true })
+  @ManyToOne(type => Produto, p => p.pedidos)
+  @JoinColumn({name:"produto_id"})
+  produto: Produto;
 
   @Field()
   @Column()
   qtd: number;
-
 }
