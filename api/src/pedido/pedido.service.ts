@@ -12,16 +12,19 @@ export class PedidoService {
     ) { }
 
     async createAndSave(pedidoInput: PedidoInput): Promise<Pedido> {
-        return this.pedidoRepository.createAndSave(pedidoInput);
+        return await this.pedidoRepository.createAndSave(pedidoInput);
     }
 
     async findAll(): Promise<Pedido[]> {
-        return this.pedidoRepository
-            .createQueryBuilder("pedido")
-            .innerJoinAndSelect("pedido.cliente", "cliente")
-            .orderBy("pedido.id", "DESC")
-            .printSql()
-            .getMany();
+        return await this.pedidoRepository.findAll();
+    }
+
+    async findByIds(ids: number[]): Promise<Pedido[]> {
+        return await this.pedidoRepository.findByIds(ids);
+    }
+
+    async findByClienteId(cliente_id: number[]): Promise<Pedido[]> {
+        return await this.pedidoRepository.findByClienteId(cliente_id);
     }
 
     async findById(id: number): Promise<Pedido> {

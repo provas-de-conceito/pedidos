@@ -17,6 +17,10 @@ export class ProdutoRepository extends Repository<Produto> {
     return await this.findOne(id);
   }
 
+  async findByIds(ids: number[]): Promise<Produto[]> {
+    return await this.findByIds(ids);
+  }
+
   async findAndUpdate(dbProduto: Produto, data: ProdutoInput): Promise<Produto> {
     await this.update(dbProduto.id, { ...data });
     const updatedProduto = this.create({ ...dbProduto, ...data });

@@ -10,11 +10,15 @@ export class ClienteRepository extends Repository<Cliente> {
   }
 
   async findAll(): Promise<Cliente[]> {
-    return this.find();
+    return await this.find();
   }
 
   async findById(id: number): Promise<Cliente> {
     return await this.findOne(id);
+  }
+
+  async findByIds(ids: number[]): Promise<Cliente[]> {
+    return await this.findByIds(ids);
   }
 
   async findAndUpdate(dbCliente: Cliente, data: ClienteInput): Promise<Cliente> {

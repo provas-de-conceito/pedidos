@@ -16,9 +16,9 @@ type Produto {
 }
 
 type PedidoItem {
+  qtd: Float!
   pedido: Pedido!
   produto: Produto!
-  qtd: Float!
 }
 
 type Pedido {
@@ -38,10 +38,10 @@ type Query {
   pedido(id: Float!): Pedido!
   allClientes: [Cliente!]!
   cliente(id: Float!): Cliente!
-  allProdutos: [Produto!]!
-  produto(id: Float!): Produto!
   allPedidoItems: [PedidoItem!]!
   pedidoItem(produto_id: Float!, pedido_id: Float!): PedidoItem!
+  allProdutos: [Produto!]!
+  produto(id: Float!): Produto!
 }
 
 type Mutation {
@@ -51,12 +51,12 @@ type Mutation {
   createCliente(data: ClienteInput!): Cliente!
   updateCliente(data: ClienteInput!, id: Float!): Cliente!
   deleteCliente(id: Float!): Boolean!
-  createProduto(data: ProdutoInput!): Produto!
-  updateProduto(data: ProdutoInput!, id: Float!): Produto!
-  deleteProduto(id: Float!): Boolean!
   createPedidoItem(data: PedidoItemInput!): PedidoItem!
   updatePedidoItem(data: PedidoItemInput!, produto_id: Float!, pedido_id: Float!): PedidoItem!
   deletePedidoItem(produto_id: Float!, pedido_id: Float!): Boolean!
+  createProduto(data: ProdutoInput!): Produto!
+  updateProduto(data: ProdutoInput!, id: Float!): Produto!
+  deleteProduto(id: Float!): Boolean!
 }
 
 input PedidoInput {
@@ -68,13 +68,13 @@ input ClienteInput {
   nome: String!
 }
 
-input ProdutoInput {
-  nome: String!
-  preco: Float!
-}
-
 input PedidoItemInput {
   pedido_id: Float!
   produto_id: Float!
   qtd: Float!
+}
+
+input ProdutoInput {
+  nome: String!
+  preco: Float!
 }

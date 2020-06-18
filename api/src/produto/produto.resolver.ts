@@ -1,36 +1,47 @@
-import { Resolver, Mutation, Args, Query } from '@nestjs/graphql';
+import { Resolver, Mutation, Args, Query, ResolveField, Parent } from '@nestjs/graphql';
 import { ProdutoService } from './produto.service';
 import { Produto } from './produto.entity';
 import { ProdutoInput } from './input/produto.input';
+import { PedidoItem } from 'src/pedido-item/pedido-item.entity';
+import { PedidoItemService } from 'src/pedido-item/pedido-item.service';
 
-@Resolver('Produto')
+@Resolver(() => Produto)
 export class ProdutoResolver {
-    constructor(private ProdutoService: ProdutoService) { }
-    @Mutation(returns => Produto)
+    constructor(
+        private produtoService: ProdutoService,
+        private pedidoItemService: PedidoItemService,
+    ) { }
+
+    @ResolveField(() => [PedidoItem])
+    async pedidos(@Parent() produto: Produto): Promise<PedidoItem[]> {
+        return this.pedidoItemService.findByProdutoId([produto.id]);
+    }
+
+    @Mutation(() => Produto)
     async createProduto(@Args('data') data: ProdutoInput): Promise<Produto> {
-        return this.ProdutoService.createAndSave(data);
+        return this.produtoService.createAndSave(data);
     }
 
-    @Query(returns => [Produto])
+    @Query(() => [Produto])
     async allProdutos(): Promise<Produto[]> {
-        return this.ProdutoService.findAll();
+        return this.produtoService.findAll();
     }
 
-    @Query(returns => Produto)
+    @Query(() => Produto)
     async produto(@Args('id') id: number): Promise<Produto> {
-        return this.ProdutoService.findById(id);
+        return this.produtoService.findById(id);
     }
 
-    @Mutation(returns => Produto)
+    @Mutation(() => Produto)
     async updateProduto(
         @Args('id') id: number,
         @Args('data') data?: ProdutoInput,
     ): Promise<Produto> {
-        return this.ProdutoService.findAndUpdate(id, data);
+        return this.produtoService.findAndUpdate(id, data);
     }
 
-    @Mutation(returns => Boolean)
+    @Mutation(() => Boolean)
     async deleteProduto(@Args('id') id: number): Promise<boolean> {
-        return this.ProdutoService.delete(id);
+        return this.produtoService.delete(id);
     }
 }

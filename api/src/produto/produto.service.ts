@@ -16,8 +16,11 @@ export class ProdutoService {
     }
 
     async findAll(): Promise<Produto[]> {
-        // return this.produtoRepository.findAll();
-        return this.produtoRepository.createQueryBuilder("produto.id, produto.client_id, cliente.nome").innerJoinAndSelect("produto.cliente_id", "cliente").orderBy("produto.id", "DESC").getMany();
+        return this.produtoRepository.findAll();
+    }
+
+    async findByIds(ids: number[]): Promise<Produto[]> {
+        return this.produtoRepository.findByIds(ids);
     }
 
     async findById(id: number): Promise<Produto> {

@@ -6,18 +6,18 @@ import { ClienteModule } from './cliente/cliente.module';
 import { ProdutoModule } from './produto/produto.module';
 import { PedidoItemModule } from './pedido-item/pedido-item.module';
 
-
 @Module({
   imports: [
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: 'localhost',
       port: 5432,
-      username: 'chcg86u1',
-      password: 'dv1010aa',
-      database: 'project-nest',
+      username: 'pedidousr',
+      password: '1010aa',
+      database: 'postgres',
       entities: ['dist/**/*.entity{.ts,.js}'],
       synchronize: false,
+      logging: true
     }),
     GraphQLModule.forRoot({
       autoSchemaFile: 'schema.gql',

@@ -1,5 +1,5 @@
-import { ObjectType, ID, Field } from '@nestjs/graphql';
-import { Entity, PrimaryGeneratedColumn, Column, PrimaryColumn, ManyToOne, OneToMany, JoinColumn } from 'typeorm';
+import { ObjectType, ID, Field, HideField } from '@nestjs/graphql';
+import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 import { Cliente } from 'src/cliente/cliente.entity';
 import { PedidoItem } from 'src/pedido-item/pedido-item.entity';
 
@@ -7,7 +7,6 @@ import { PedidoItem } from 'src/pedido-item/pedido-item.entity';
 @Entity({ schema: "sc3" })
 export class Pedido {
   @Field(() => ID)
-  @PrimaryColumn()
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -15,13 +14,13 @@ export class Pedido {
   @Column()
   data: Date;
 
-  @Field(type => Cliente, { name: "cliente" })
-  @Column({ name: "cliente_id", type: "integer" })
-  @ManyToOne(type => Cliente, c => c.pedidos)
-  @JoinColumn({ name: "cliente_id" })
+  @Field(() => Cliente, { name: "cliente" })
   cliente: Cliente;
 
-  @Field(type => [PedidoItem])
-  @OneToMany(() => PedidoItem, (item) => item.pedido)
+  @HideField()
+  @Column({name: "cliente_id", type:"int"})
+  cliente_id: number;
+
+  @Field(() => [PedidoItem])
   items: Array<PedidoItem>;
 }
