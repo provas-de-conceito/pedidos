@@ -10,11 +10,21 @@ export class PedidoRepository extends Repository<Pedido> {
   }
 
   async findAll(): Promise<Pedido[]> {
-    return this.find();
+    return await this.find();
   }
 
   async findById(id: number): Promise<Pedido> {
     return await this.findOne(id);
+  }
+
+  async findByIds(ids: number[]): Promise<Pedido[]> {
+    return await this.findByIds(ids);
+  }
+
+  async findByClienteId(cliente_id: number[]): Promise<Pedido[]> {
+    return await this.createQueryBuilder("pedido")
+      .where("cliente_id in (:...cliente_id)",{ cliente_id: cliente_id })
+      .getMany();
   }
 
   async findAndUpdate(dbPedido: Pedido, data: PedidoInput): Promise<Pedido> {

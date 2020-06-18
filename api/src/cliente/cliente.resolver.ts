@@ -1,37 +1,47 @@
-import { Resolver, Mutation, Args, Query } from '@nestjs/graphql';
+import { Resolver, Mutation, Args, Query, ResolveField, Parent } from '@nestjs/graphql';
 import { ClienteService } from './cliente.service';
 import { Cliente } from './cliente.entity';
 import { ClienteInput } from './input/cliente.input';
+import { Pedido } from 'src/pedido/pedido.entity';
+import { PedidoService } from 'src/pedido/pedido.service';
 
-@Resolver('Cliente')
+@Resolver(() => Cliente)
 export class ClienteResolver {
-    constructor(private ClienteService: ClienteService) { }
+    constructor(
+        private clienteService: ClienteService,
+        private pedidoService: PedidoService
+    ) { }
 
-    @Mutation(returns => Cliente)
+    @ResolveField(() => [Pedido])
+    async pedidos(@Parent() cliente: Cliente): Promise<Pedido[]> {
+        return this.pedidoService.findByClienteId([cliente.id])
+    }
+
+    @Mutation(() => Cliente)
     async createCliente(@Args('data') data: ClienteInput): Promise<Cliente> {
-        return this.ClienteService.createAndSave(data);
+        return this.clienteService.createAndSave(data);
     }
 
-    @Query(returns => [Cliente])
+    @Query(() => [Cliente])
     async allClientes(): Promise<Cliente[]> {
-        return this.ClienteService.findAll();
+        return this.clienteService.findAll();
     }
 
-    @Query(returns => Cliente)
+    @Query(() => Cliente)
     async cliente(@Args('id') id: number): Promise<Cliente> {
-        return this.ClienteService.findById(id);
+        return this.clienteService.findById(id);
     }
 
-    @Mutation(returns => Cliente)
+    @Mutation(() => Cliente)
     async updateCliente(
         @Args('id') id: number,
         @Args('data') data?: ClienteInput,
     ): Promise<Cliente> {
-        return this.ClienteService.findAndUpdate(id, data);
+        return this.clienteService.findAndUpdate(id, data);
     }
 
-    @Mutation(returns => Boolean)
+    @Mutation(() => Boolean)
     async deleteCliente(@Args('id') id: number): Promise<boolean> {
-        return this.ClienteService.delete(id);
+        return this.clienteService.delete(id);
     }
 }

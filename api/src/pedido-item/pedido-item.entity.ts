@@ -1,24 +1,26 @@
-import { ObjectType, Field } from '@nestjs/graphql';
-import { Entity, Column, ManyToOne, JoinColumn } from 'typeorm';
+import { ObjectType, Field, HideField } from '@nestjs/graphql';
+import { Entity, Column } from 'typeorm';
 import { Pedido } from 'src/pedido/pedido.entity';
 import { Produto } from 'src/produto/produto.entity';
 // struct db
 @ObjectType()
 @Entity({ schema: "sc3" })
-export class PedidoItem {
-  @Field(type => Pedido, { name: "pedido" })
+export class PedidoItem {  
+  @HideField()
   @Column({ name: "pedido_id", type: "integer", primary: true })
-  @ManyToOne(type => Pedido, p => p.items)
-  @JoinColumn({ name: "pedido_id" })
-  pedido: Pedido;
+  pedido_id: number;  
 
-  @Field(type => Produto, { name: "produto" })
+  @HideField()
   @Column({ name: "produto_id", type: "integer", primary: true })
-  @ManyToOne(type => Produto, p => p.pedidos)
-  @JoinColumn({ name: "produto_id" })
-  produto: Produto;
+  produto_id: number;
 
   @Field()
   @Column()
   qtd: number;
+
+  @Field(() => Pedido, { name: "pedido" })
+  pedido: Pedido;
+
+  @Field(() => Produto, { name: "produto" }) 
+  produto: Produto;
 }
