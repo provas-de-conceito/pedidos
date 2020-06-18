@@ -1,12 +1,11 @@
 import { Repository, EntityRepository } from 'typeorm';
 import { Pedido } from './pedido.entity';
-import { CreatePedidoInput } from './dto/create-pedido.type';
-import { UpdatePedidoInput } from './dto/update-pedido.type';
+import { PedidoInput } from './input/pedido.input';
 
 @EntityRepository(Pedido)
 export class PedidoRepository extends Repository<Pedido> {
-  async createAndSave(createPedidoInput: CreatePedidoInput): Promise<Pedido> {
-    const Pedido = await this.save(this.create(createPedidoInput));
+  async createAndSave(pedidoInput: PedidoInput): Promise<Pedido> {
+    const Pedido = await this.save(this.create(pedidoInput));
     return await this.findById(Pedido.id);
   }
 
@@ -18,7 +17,7 @@ export class PedidoRepository extends Repository<Pedido> {
     return await this.findOne(id);
   }
 
-  async findAndUpdate(dbPedido: Pedido, data: UpdatePedidoInput): Promise<Pedido> {
+  async findAndUpdate(dbPedido: Pedido, data: PedidoInput): Promise<Pedido> {
     await this.update(dbPedido.id, { ...data });
     const updatedPedido = this.create({ ...dbPedido, ...data });
     return updatedPedido;

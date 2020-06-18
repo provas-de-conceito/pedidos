@@ -45,55 +45,35 @@ type Query {
 }
 
 type Mutation {
-  createPedido(data: CreatePedidoInput!): Pedido!
-  updatePedido(data: UpdatePedidoInput!, id: Float!): Pedido!
+  createPedido(data: PedidoInput!): Pedido!
+  updatePedido(data: PedidoInput!, id: Float!): Pedido!
   deletePedido(id: Float!): Boolean!
-  createCliente(data: CreateClienteInput!): Cliente!
-  updateCliente(data: UpdateClienteInput!, id: Float!): Cliente!
+  createCliente(data: ClienteInput!): Cliente!
+  updateCliente(data: ClienteInput!, id: Float!): Cliente!
   deleteCliente(id: Float!): Boolean!
-  createProduto(data: CreateProdutoInput!): Produto!
-  updateProduto(data: UpdateProdutoInput!, id: Float!): Produto!
+  createProduto(data: ProdutoInput!): Produto!
+  updateProduto(data: ProdutoInput!, id: Float!): Produto!
   deleteProduto(id: Float!): Boolean!
-  createPedidoItem(data: CreatePedidoItemInput!): PedidoItem!
-  updatePedidoItem(data: UpdatePedidoItemInput!, produto_id: Float!, pedido_id: Float!): PedidoItem!
+  createPedidoItem(data: PedidoItemInput!): PedidoItem!
+  updatePedidoItem(data: PedidoItemInput!, produto_id: Float!, pedido_id: Float!): PedidoItem!
   deletePedidoItem(produto_id: Float!, pedido_id: Float!): Boolean!
 }
 
-input CreatePedidoInput {
+input PedidoInput {
   data: DateTime!
   cliente_id: Float!
 }
 
-input UpdatePedidoInput {
-  data: DateTime!
-  cliente_id: Float!
-}
-
-input CreateClienteInput {
+input ClienteInput {
   nome: String!
 }
 
-input UpdateClienteInput {
-  nome: String!
-}
-
-input CreateProdutoInput {
+input ProdutoInput {
   nome: String!
   preco: Float!
 }
 
-input UpdateProdutoInput {
-  nome: String!
-  preco: Float!
-}
-
-input CreatePedidoItemInput {
-  pedido_id: Float!
-  produto_id: Float!
-  qtd: Float!
-}
-
-input UpdatePedidoItemInput {
+input PedidoItemInput {
   pedido_id: Float!
   produto_id: Float!
   qtd: Float!

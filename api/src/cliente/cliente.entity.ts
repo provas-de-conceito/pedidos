@@ -11,10 +11,9 @@ export class Cliente {
   id: number;
 
   @Field()
-  @Column()
   nome: string;
 
-  @Field(type=> [Pedido])
-  @OneToMany(()=>Pedido, (pedido)=>pedido.cliente)
+  @Field(type => [Pedido])
+  @OneToMany(() => Pedido, (pedido) => pedido.cliente)
   pedidos: Array<Pedido>;
 }

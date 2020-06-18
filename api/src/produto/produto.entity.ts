@@ -5,7 +5,7 @@ import { PedidoItem } from 'src/pedido-item/pedido-item.entity';
 @ObjectType()
 @Entity({ schema: "sc2" })
 export class Produto {
-  @Field(type => ID)
+  @Field(() => ID)
   @PrimaryColumn()
   @PrimaryGeneratedColumn()
   id: number;
@@ -20,6 +20,6 @@ export class Produto {
   // preciso de um tipo para moeda...
 
   @Field(type => [PedidoItem])
-  @OneToMany(()=>PedidoItem, (item)=>item.produto)
+  @OneToMany(() => PedidoItem, (item) => item.produto)
   pedidos: Array<PedidoItem>;
 }

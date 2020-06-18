@@ -2,9 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { PedidoRepository } from './pedido.repository';
 import { Pedido } from './pedido.entity';
-import { CreatePedidoInput } from './dto/create-pedido.type';
-import { UpdatePedidoInput } from './dto/update-pedido.type';
-import { JoinColumn } from 'typeorm';
+import { PedidoInput } from './input/pedido.input';
 
 @Injectable()
 export class PedidoService {
@@ -13,17 +11,17 @@ export class PedidoService {
         private pedidoRepository: PedidoRepository,
     ) { }
 
-    async createAndSave(createPedidoInput: CreatePedidoInput): Promise<Pedido> {
-        return this.pedidoRepository.createAndSave(createPedidoInput);
+    async createAndSave(pedidoInput: PedidoInput): Promise<Pedido> {
+        return this.pedidoRepository.createAndSave(pedidoInput);
     }
 
     async findAll(): Promise<Pedido[]> {
         return this.pedidoRepository
-        .createQueryBuilder("pedido")
-        .innerJoinAndSelect("pedido.cliente", "cliente")
-        .orderBy("pedido.id", "DESC")
-        .printSql()
-        .getMany();
+            .createQueryBuilder("pedido")
+            .innerJoinAndSelect("pedido.cliente", "cliente")
+            .orderBy("pedido.id", "DESC")
+            .printSql()
+            .getMany();
     }
 
     async findById(id: number): Promise<Pedido> {
@@ -34,7 +32,7 @@ export class PedidoService {
         return pedido;
     }
 
-    async findAndUpdate(id: number, data?: UpdatePedidoInput): Promise<Pedido> {
+    async findAndUpdate(id: number, data?: PedidoInput): Promise<Pedido> {
         const dbPedido = await this.findById(id);
         return this.pedidoRepository.findAndUpdate(dbPedido, data);
     }
