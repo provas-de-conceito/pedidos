@@ -1,15 +1,14 @@
 import { Resolver, Mutation, Args, Query } from '@nestjs/graphql';
 import { PedidoItemService } from './pedido-item.service';
 import { PedidoItem } from './pedido-item.entity';
-import { CreatePedidoItemInput } from './dto/create-pedido-item.type';
-import { UpdatePedidoItemInput } from './dto/update-pedido-item.type';
+import { PedidoItemInput } from './input/pedido-item.input';
 
 @Resolver('PedidoItem')
 export class PedidoItemResolver {
     constructor(private PedidoItemService: PedidoItemService) { }
 
     @Mutation(returns => PedidoItem)
-    async createPedidoItem(@Args('data') data: CreatePedidoItemInput): Promise<PedidoItem> {
+    async createPedidoItem(@Args('data') data: PedidoItemInput): Promise<PedidoItem> {
         return this.PedidoItemService.createAndSave(data);
     }
 
@@ -27,7 +26,7 @@ export class PedidoItemResolver {
     async updatePedidoItem(
         @Args('pedido_id') pedido_id: number,
         @Args('produto_id') produto_id: number,
-        @Args('data') data?: UpdatePedidoItemInput,
+        @Args('data') data?: PedidoItemInput,
     ): Promise<PedidoItem> {
         return this.PedidoItemService.findAndUpdate(pedido_id, produto_id, data);
     }

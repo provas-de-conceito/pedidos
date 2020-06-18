@@ -1,12 +1,11 @@
 import { Repository, EntityRepository } from 'typeorm';
 import { Cliente } from './cliente.entity';
-import { CreateClienteInput } from './dto/create-cliente.type';
-import { UpdateClienteInput } from './dto/update-cliente.type';
+import { ClienteInput } from './input/cliente.input';
 
 @EntityRepository(Cliente)
 export class ClienteRepository extends Repository<Cliente> {
-  async createAndSave(createClienteInput: CreateClienteInput): Promise<Cliente> {
-    const Cliente = await this.save(this.create(createClienteInput));
+  async createAndSave(clienteInput: ClienteInput): Promise<Cliente> {
+    const Cliente = await this.save(this.create(clienteInput));
     return await this.findById(Cliente.id);
   }
 
@@ -18,7 +17,7 @@ export class ClienteRepository extends Repository<Cliente> {
     return await this.findOne(id);
   }
 
-  async findAndUpdate(dbCliente: Cliente, data: UpdateClienteInput): Promise<Cliente> {
+  async findAndUpdate(dbCliente: Cliente, data: ClienteInput): Promise<Cliente> {
     await this.update(dbCliente.id, { ...data });
     const updatedCliente = this.create({ ...dbCliente, ...data });
     return updatedCliente;

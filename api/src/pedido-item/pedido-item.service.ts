@@ -2,8 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { PedidoItemRepository } from './pedido-item.repository';
 import { PedidoItem } from './pedido-item.entity';
-import { CreatePedidoItemInput } from './dto/create-pedido-item.type';
-import { UpdatePedidoItemInput } from './dto/update-pedido-item.type';
+import { PedidoItemInput } from './input/pedido-item.input';
 
 @Injectable()
 export class PedidoItemService {
@@ -12,8 +11,8 @@ export class PedidoItemService {
         private PedidoItemRepository: PedidoItemRepository,
     ) { }
 
-    async createAndSave(createPedidoItemInput: CreatePedidoItemInput): Promise<PedidoItem> {
-        return this.PedidoItemRepository.createAndSave(createPedidoItemInput);
+    async createAndSave(pedidoItemInput: PedidoItemInput): Promise<PedidoItem> {
+        return this.PedidoItemRepository.createAndSave(pedidoItemInput);
     }
 
     async findAll(): Promise<PedidoItem[]> {
@@ -29,7 +28,7 @@ export class PedidoItemService {
         return PedidoItem;
     }
 
-    async findAndUpdate(pedido_id: number, produto_id: number, data?: UpdatePedidoItemInput): Promise<PedidoItem> {
+    async findAndUpdate(pedido_id: number, produto_id: number, data?: PedidoItemInput): Promise<PedidoItem> {
         const dbPedidoItem = await this.findById(pedido_id, produto_id);
         return this.PedidoItemRepository.findAndUpdate(dbPedidoItem, data);
     }

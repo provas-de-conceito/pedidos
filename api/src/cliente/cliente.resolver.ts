@@ -1,15 +1,14 @@
 import { Resolver, Mutation, Args, Query } from '@nestjs/graphql';
 import { ClienteService } from './cliente.service';
 import { Cliente } from './cliente.entity';
-import { CreateClienteInput } from './dto/create-cliente.type';
-import { UpdateClienteInput } from './dto/update-cliente.type';
+import { ClienteInput } from './input/cliente.input';
 
 @Resolver('Cliente')
 export class ClienteResolver {
     constructor(private ClienteService: ClienteService) { }
 
     @Mutation(returns => Cliente)
-    async createCliente(@Args('data') data: CreateClienteInput): Promise<Cliente> {
+    async createCliente(@Args('data') data: ClienteInput): Promise<Cliente> {
         return this.ClienteService.createAndSave(data);
     }
 
@@ -26,7 +25,7 @@ export class ClienteResolver {
     @Mutation(returns => Cliente)
     async updateCliente(
         @Args('id') id: number,
-        @Args('data') data?: UpdateClienteInput,
+        @Args('data') data?: ClienteInput,
     ): Promise<Cliente> {
         return this.ClienteService.findAndUpdate(id, data);
     }

@@ -1,12 +1,11 @@
 import { Repository, EntityRepository } from 'typeorm';
 import { PedidoItem } from './pedido-item.entity';
-import { CreatePedidoItemInput } from './dto/create-pedido-item.type';
-import { UpdatePedidoItemInput } from './dto/update-pedido-item.type';
+import { PedidoItemInput } from './input/pedido-item.input';
 
 @EntityRepository(PedidoItem)
 export class PedidoItemRepository extends Repository<PedidoItem> {
-  async createAndSave(createPedidoItemInput: CreatePedidoItemInput): Promise<PedidoItem> {
-    const PedidoItem = await this.save(this.create(createPedidoItemInput));
+  async createAndSave(pedidoItemInput: PedidoItemInput): Promise<PedidoItem> {
+    const PedidoItem = await this.save(this.create(pedidoItemInput));
     return await this.findById(PedidoItem.pedido.id, PedidoItem.produto.id);
   }
 
@@ -18,7 +17,7 @@ export class PedidoItemRepository extends Repository<PedidoItem> {
     return await this.findById(pedido_id, produto_id);
   }
 
-  async findAndUpdate(dbPedidoItem: PedidoItem, data: UpdatePedidoItemInput): Promise<PedidoItem> {
+  async findAndUpdate(dbPedidoItem: PedidoItem, data: PedidoItemInput): Promise<PedidoItem> {
     await this.createQueryBuilder().update(PedidoItem).set({
       qtd: data.qtd
     }).where("pedido_id = :pedido_id", { pedido_id: dbPedidoItem.pedido.id }).andWhere("produto_id = :produto_id", { produto_id: dbPedidoItem.produto.id }).execute();

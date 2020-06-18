@@ -14,14 +14,14 @@ export class Pedido {
   @Field()
   @Column()
   data: Date;
-  
-  @Field(type=> Cliente, {name: "cliente"})
-  @Column({ name: "cliente_id", type: "integer"})
+
+  @Field(type => Cliente, { name: "cliente" })
+  @Column({ name: "cliente_id", type: "integer" })
   @ManyToOne(type => Cliente, c => c.pedidos)
-  @JoinColumn({name:"cliente_id"})
+  @JoinColumn({ name: "cliente_id" })
   cliente: Cliente;
 
   @Field(type => [PedidoItem])
-  @OneToMany(()=>PedidoItem, (item)=>item.pedido)
+  @OneToMany(() => PedidoItem, (item) => item.pedido)
   items: Array<PedidoItem>;
 }

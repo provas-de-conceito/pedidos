@@ -1,12 +1,11 @@
 import { Repository, EntityRepository } from 'typeorm';
 import { Produto } from './produto.entity';
-import { CreateProdutoInput } from './dto/create-produto.type';
-import { UpdateProdutoInput } from './dto/update-produto.type';
+import { ProdutoInput } from './input/produto.input';
 
 @EntityRepository(Produto)
 export class ProdutoRepository extends Repository<Produto> {
-  async createAndSave(createProdutoInput: CreateProdutoInput): Promise<Produto> {
-    const Produto = await this.save(this.create(createProdutoInput));
+  async createAndSave(produtoInput: ProdutoInput): Promise<Produto> {
+    const Produto = await this.save(this.create(produtoInput));
     return await this.findById(Produto.id);
   }
 
@@ -18,7 +17,7 @@ export class ProdutoRepository extends Repository<Produto> {
     return await this.findOne(id);
   }
 
-  async findAndUpdate(dbProduto: Produto, data: UpdateProdutoInput): Promise<Produto> {
+  async findAndUpdate(dbProduto: Produto, data: ProdutoInput): Promise<Produto> {
     await this.update(dbProduto.id, { ...data });
     const updatedProduto = this.create({ ...dbProduto, ...data });
     return updatedProduto;

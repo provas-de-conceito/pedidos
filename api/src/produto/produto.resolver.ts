@@ -1,15 +1,13 @@
 import { Resolver, Mutation, Args, Query } from '@nestjs/graphql';
 import { ProdutoService } from './produto.service';
 import { Produto } from './produto.entity';
-import { CreateProdutoInput } from './dto/create-produto.type';
-import { UpdateProdutoInput } from './dto/update-produto.type';
+import { ProdutoInput } from './input/produto.input';
 
 @Resolver('Produto')
 export class ProdutoResolver {
     constructor(private ProdutoService: ProdutoService) { }
-
     @Mutation(returns => Produto)
-    async createProduto(@Args('data') data: CreateProdutoInput): Promise<Produto> {
+    async createProduto(@Args('data') data: ProdutoInput): Promise<Produto> {
         return this.ProdutoService.createAndSave(data);
     }
 
@@ -26,7 +24,7 @@ export class ProdutoResolver {
     @Mutation(returns => Produto)
     async updateProduto(
         @Args('id') id: number,
-        @Args('data') data?: UpdateProdutoInput,
+        @Args('data') data?: ProdutoInput,
     ): Promise<Produto> {
         return this.ProdutoService.findAndUpdate(id, data);
     }
