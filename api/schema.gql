@@ -5,6 +5,7 @@
 type Cliente {
   id: ID!
   nome: String!
+  email: String!
   pedidos: [Pedido!]!
 }
 
@@ -33,11 +34,16 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
+type Token {
+  token: String!
+}
+
 type Query {
   allPedidos: [Pedido!]!
   pedido(id: Float!): Pedido!
   allClientes: [Cliente!]!
   cliente(id: Float!): Cliente!
+  getCurrentUser: Cliente!
   allPedidoItems: [PedidoItem!]!
   pedidoItem(produto_id: Float!, pedido_id: Float!): PedidoItem!
   allProdutos: [Produto!]!
@@ -48,9 +54,8 @@ type Mutation {
   createPedido(data: PedidoInput!): Pedido!
   updatePedido(data: PedidoInput!, id: Float!): Pedido!
   deletePedido(id: Float!): Boolean!
-  createCliente(data: ClienteInput!): Cliente!
-  updateCliente(data: ClienteInput!, id: Float!): Cliente!
-  deleteCliente(id: Float!): Boolean!
+  signUp(data: ClienteInput!): Token!
+  signIn(data: SignInClienteInput!): Token!
   createPedidoItem(data: PedidoItemInput!): PedidoItem!
   updatePedidoItem(data: PedidoItemInput!, produto_id: Float!, pedido_id: Float!): PedidoItem!
   deletePedidoItem(produto_id: Float!, pedido_id: Float!): Boolean!
@@ -66,6 +71,13 @@ input PedidoInput {
 
 input ClienteInput {
   nome: String!
+  email: String!
+  senha: String!
+}
+
+input SignInClienteInput {
+  email: String!
+  senha: String!
 }
 
 input PedidoItemInput {

@@ -10,8 +10,8 @@ import { Cliente } from 'src/cliente/cliente.entity'
   imports: [
     PassportModule.register({ defaultStrategy: 'jwt' }),
     JwtModule.registerAsync({
-      useFactory: async (configService: ConfigService) => ({
-        secret: configService.get('SECRET'),
+      useFactory: async () => ({
+        secret: 'jwtsecret',
         signOptions: {
           expiresIn: 216000, // 1 Hour: 60 * 60 * 60
         },

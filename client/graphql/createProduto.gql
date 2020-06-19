@@ -1,0 +1,7 @@
+mutation createProduto($nome: String!, $preco: Float!) {
+  createProduto(data: { nome: $nome, preco: $preco }) {
+    id
+    nome
+    preco
+  }
+}

@@ -1,0 +1,18 @@
+query pedido($id: Float!) {
+  pedido(id: $id) {
+    id
+    data
+    cliente {
+      id
+      nome
+    }
+    items {
+      qtd
+      produto {
+        id
+        nome
+        preco
+      }
+    }
+  }
+}

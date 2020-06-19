@@ -1,0 +1,10 @@
+query allPedidos {
+  allPedidos {
+    id
+    data
+    cliente {
+      id
+      nome
+    }
+  }
+}

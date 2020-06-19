@@ -1,0 +1,3 @@
+mutation deletePedidoItem($produto_id: Float!,$pedido_id: Float!) {
+  deletePedidoItem(produto_id: $produto_id, pedido_id: $pedido_id) 
+}

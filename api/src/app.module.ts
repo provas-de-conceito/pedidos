@@ -21,6 +21,7 @@ import { PedidoItemModule } from './pedido-item/pedido-item.module';
     }),
     GraphQLModule.forRoot({
       autoSchemaFile: 'schema.gql',
+      context: ({ req }) => ({ req }),
     }),
     PedidoModule,
     ClienteModule,

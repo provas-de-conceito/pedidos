@@ -1,0 +1,10 @@
+query cliente($id: Float!) {
+  cliente(id: $id) {
+    id
+    nome
+    pedidos {
+      id
+      data
+    }
+  }
+}
