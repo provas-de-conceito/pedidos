@@ -1,0 +1,10 @@
+mutation updatePedido($data: DateTime!, $cliente_id: Float!) {
+  updatePedido(data: { data: $data, cliente_id: $cliente_id }) {
+    id
+    data
+    cliente {
+      id
+      nome
+    }
+  }
+}

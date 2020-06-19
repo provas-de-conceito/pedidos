@@ -1,0 +1,18 @@
+mutation createPedidoItem($produto_id: Float!, $pedido_id: Float!, $qtd: Float!) {
+  createPedidoItem(data: { produto_id: $produto_id, pedido_id: $pedido_id, qtd: $qtd }) {
+    qtd
+    produto {
+      id
+      nome
+      preco
+    }
+    pedido {
+      id
+      data
+      cliente {
+        id
+        nome
+      }
+    }
+  }
+}

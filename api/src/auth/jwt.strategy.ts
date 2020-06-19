@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import { PassportStrategy } from '@nestjs/passport'
 import { Strategy, ExtractJwt } from 'passport-jwt'
 import { Injectable, UnauthorizedException } from '@nestjs/common'
@@ -14,11 +15,11 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     super({
       jwtFromRequest: ExtractJwt.fromHeader("authorization"),
       ignoreExpiration: false,
-      secretOrKey: 'jwt_secret',
+      secretOrKey: 'jwtsecret',
     })
   }
 
-  async validate(payload: any): Promise<Cliente | null> {
+  async validate(payload: any): Promise<Cliente | null> {   
     const { email } = payload
     const user = await this.clienteRepository.findOne({
       email

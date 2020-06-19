@@ -90,6 +90,8 @@ ALTER TABLE sc3.pedido_item OWNER TO pedidousr;
 CREATE TABLE sc2.cliente (
 	id serial NOT NULL,
 	nome character varying(250) NOT NULL,
+	email text NOT NULL unique,
+	senha text NOT NULL,
 	CONSTRAINT pk_cliente PRIMARY KEY (id)
 
 );

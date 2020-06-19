@@ -1,0 +1,7 @@
+query produto($id: Float!) {
+  produto(id: $id) {
+    id
+    nome
+    preco
+  }
+}

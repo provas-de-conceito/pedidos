@@ -1,0 +1,7 @@
+mutation updateProduto($nome: String!, $preco: Float!, $id: Float!) {
+  updateProduto(data: { nome: $nome, preco: $preco }, id: $id) {
+    id
+    nome
+    preco
+  }
+}
