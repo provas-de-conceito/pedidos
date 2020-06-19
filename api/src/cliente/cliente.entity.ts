@@ -1,4 +1,4 @@
-import { ObjectType, ID, Field } from '@nestjs/graphql';
+import { ObjectType, ID, Field, HideField } from '@nestjs/graphql';
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 import { Pedido } from 'src/pedido/pedido.entity';
 
@@ -12,6 +12,14 @@ export class Cliente {
   @Field()
   @Column()
   nome: string;
+
+  @Field()
+  @Column()
+  email: string;
+
+  @HideField()
+  @Column()
+  senha: string;
 
   @Field(() => [Pedido])
   pedidos: Array<Pedido>;
