@@ -17,7 +17,6 @@ import { PedidoItemModule } from './pedido-item/pedido-item.module';
       database: 'postgres',
       entities: ['dist/**/*.entity{.ts,.js}'],
       synchronize: false,
-      logging: true
     }),
     GraphQLModule.forRoot({
       autoSchemaFile: 'schema.gql',
