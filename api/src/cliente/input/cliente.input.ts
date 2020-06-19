@@ -4,4 +4,10 @@ import { InputType, Field } from '@nestjs/graphql';
 export class ClienteInput {
   @Field()
   nome: string;
+
+  @Field()
+  email: string;
+
+  @Field()
+  senha: string;
 }
